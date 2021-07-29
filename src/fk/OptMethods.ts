@@ -6,7 +6,7 @@ export class OptMethods implements IOpt {
         this.methods = methods;
     }
 
-    parse(): Map<string, string[]> {
+    parse<T>(): Map<string, T> {
         const splittedMethods = this.methods.replace(/ /g, '').split(',');
         if (new Set(splittedMethods).size !== splittedMethods.length) throw new Error('Methods have duplicated values');
         return new Map().set('methods', [...new Set(this.methods.replace(/ /g, '').split(','))]);

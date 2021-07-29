@@ -1,3 +1,3 @@
 export interface IOpt {
-    parse(): Map<string, Map<string, string> | string[]>;
+    parse<T>(): Map<string, Map<string, T>>;
 }

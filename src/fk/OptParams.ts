@@ -9,7 +9,7 @@ export class OptParams implements IOpt {
         this.url = url;
         this.map = new Map();
     }
-    public parse(): Map<string, Map<string, string>> {
+    public parse<T>(): Map<string, T> {
         this.url.split('').map((e, i) => {
             if (e === ':') {
                 this.map.set(this.url.slice(i+1).split('/')[0], String(i));
