@@ -13,8 +13,6 @@ export class TkEndpoint implements ITake {
 
     act(req: http.IncomingMessage, res: http.ServerResponse): void {
         const map = this.options.route(req, res).band();
-        console.log(map)
-        console.log(req)
         if (req.method) {
             if (req.url === this.parseUrl(map) && this.parseMethods(map).includes(req.method)) {
                 this.take.act(req, res);

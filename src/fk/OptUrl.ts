@@ -9,7 +9,6 @@ export class OptUrl implements IOpt {
     }
 
     parse(): Map<string, Map<string, string> | string[]> {
-        console.log(this)
         return new Map().set('url', [this.subUrl + this.url]);
     }
 
