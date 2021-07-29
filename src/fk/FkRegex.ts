@@ -22,10 +22,10 @@ export class FkRegex implements IFork {
         return this.options;
     }
 
-    private parseUrl(value: string[]): string {
-        value.map(a => {
-            if (a.slice(0, 3) === 'url') return a.slice(5);
-        });
+    private parseUrl(values: string[]): string {
+        for (const value of values) {
+            if (value.slice(0, 6) === 'subUrl') return value.slice(7);
+        }
         return '';
     }
 }

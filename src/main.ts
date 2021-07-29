@@ -11,7 +11,6 @@ class Main {
             8080,
             new TkFork('/users',
                 new TkEndpoint(new FkRegex('/list', 'GET, POST, PATCH, DELETE'), new UserList())),
-            new TkFork('/user/:id', new UserList()),
         ).start();
     }
 }
