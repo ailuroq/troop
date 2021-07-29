@@ -1,11 +1,11 @@
 import http from 'http';
-import { Fork } from './Fork';
+import { TkFork } from './tk/TkFork';
 
 export class Basic {
     private readonly port: number;
-    private readonly frks: Fork[];
+    private readonly frks: TkFork[];
 
-    constructor(port: number, ...forks: Fork[]) {
+    constructor(port: number, ...forks: TkFork[]) {
         this.port = port;
         this.frks = forks;
     }

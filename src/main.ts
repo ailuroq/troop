@@ -1,22 +1,23 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { Basic } from './Basic';
-import { Endpoint } from './Endpoint';
-import { Fork } from './Fork';
-import { ITake } from './ITake';
+import { TkEndpoint } from './tk/TkEndpoint';
+import { TkFork } from './tk/TkFork';
+import { ITake } from './tk/ITake';
+import { FkRegex } from './fk/FkRegex';
 
 class Main {
     public main(): void {
         new Basic(
             8080,
-            new Fork('/users', new Endpoint(new UserList(), '/list', 'GET')),
-            new Fork('/user/:id', new UserList()),
+            new TkFork('/users',
+                new TkEndpoint(new FkRegex('/list', 'GET, POST, PATCH, DELETE'), new UserList())),
+            new TkFork('/user/:id', new UserList()),
         ).start();
     }
 }
 
 class UserList implements ITake {
     act(_req: IncomingMessage, res: ServerResponse): void {
-        throw new Error('blabla');
         res.write(JSON.stringify({hello: 'there'}));
         res.end();
     }
