@@ -20,7 +20,7 @@ export class TkEndpoint implements ITake {
         }
     }
 
-    private parseUrl(maps: Map<string, Map<string, string> | string[]>[]): string {
+    private parseUrl<T>(maps: Map<string, T>[]): string {
         for (const map of maps) {
             const value = map.get('url');
             if (Array.isArray(value)) {
@@ -29,7 +29,7 @@ export class TkEndpoint implements ITake {
         }
         return '';
     }
-    private parseMethods(maps: Map<string, Map<string, string> | string[]>[]): string[] {
+    private parseMethods<T>(maps: Map<string, T>[]): string[] {
         for (const map of maps) {
             const value = map.get('methods');
             if (Array.isArray(value)) {

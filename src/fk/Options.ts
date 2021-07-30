@@ -4,7 +4,7 @@ import { IOpt } from './IOpt';
 
 export class Options {
     private readonly options: IOpt[];
-    private readonly maps: Map<string, Map<string, string> | string[]>[];
+    private readonly maps: Map<string, any>[];
     constructor(...opts: IOpt[]) {
         this.options = opts;
         this.maps = [];
@@ -14,14 +14,14 @@ export class Options {
         this.maps.length = 0;
     }
 
-    band(): Map<string, Map<string, string> | string[]>[] {
+    band<T>(): Map<string, T>[] {
         for (const option of this.options) {
             this.addOption(option.parse());
         }
         return this.maps;
     }
 
-    addOption(options: Map<string, Map<string, string> | string[]>): void {
+    addOption<T>(options: Map<string, T>): void {
         this.maps.push(options);
     }
 }
