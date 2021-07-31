@@ -10,8 +10,8 @@ class Main {
         new Basic(
             8081,
             new TkFork(
-                new TkEndpoint('/user/list', 'GET, POST', new TkUserList()),
-                new TkEndpoint('/user/list', 'GET, POST', new TkUserList()),
+                new TkEndpoint('/user/lists', 'GET, POST', new TkUserList()),
+                new TkEndpoint('/user', 'GET, POST', new TkUserList()),
             ),
             new TkEndpoint('/user/list', 'GET, POST', new TkUserList()),
         ).start();

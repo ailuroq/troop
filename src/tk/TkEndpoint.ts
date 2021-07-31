@@ -4,6 +4,8 @@ import { Request } from '../Request';
 import { TkOptions } from './TkOptions';
 import { OptUrl } from '../opt/OptUrl';
 import { OptMethods } from '../opt/OptMethods';
+import { OptParams } from '../opt/OptParams';
+
 export class TkEndpoint implements ITake {
     private readonly take: ITake;
     private readonly url: string;
@@ -16,6 +18,7 @@ export class TkEndpoint implements ITake {
         this.take = take;
         this.options = new TkOptions(
             new OptUrl(this.url),
+            new OptParams(this.url),
             new OptMethods(this.methods),
         );
     }

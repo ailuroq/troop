@@ -9,11 +9,13 @@ export class OptParams implements IOpt {
         this.map = new Map();
     }
     parse<T>(): Map<string, T> {
-        this.url.split('').map((e, i) => {
-            if (e === ':') {
-                this.map.set(this.url.slice(i+1).split('/')[0], String(i));
+        const splittedUrl = this.url.split('/');
+        for (let i = 0; i < splittedUrl.length; i++) {
+            const splittedPeace = splittedUrl[i].split('');
+            if (splittedPeace[0] === ':') {
+                this.map.set(String(i-1), splittedUrl[i].slice(1));
             }
-        });
+        }
         return new Map().set('params', this.map);
     }
 } 
