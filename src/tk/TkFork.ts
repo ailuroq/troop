@@ -1,20 +1,17 @@
+import { ServerResponse } from 'http';
 import { ITake } from './ITake';
-import http from 'http';
+import { Request } from '../Request';
 
 export class TkFork implements ITake {
-    private readonly subUrl: string;
-    private readonly endpoints: ITake[];
+    private readonly takes: ITake[];
 
-    constructor(url: string, ...endpts: ITake[]) {
-        this.subUrl = url;
-        this.endpoints = endpts;
+    constructor(...tks: ITake[]) {
+        this.takes = tks;
     }
-    
-    act(req: http.IncomingMessage, res: http.ServerResponse): void {
-        req.rawHeaders.push(`subUrl ${this.subUrl}`);
-        for (const endpoint of this.endpoints) {
-            endpoint.act(req, res);
+
+    act(req: Request, res: ServerResponse): void {
+        for (const take of this.takes) {
+            take.act(req, res);
         }
     }
 }
-

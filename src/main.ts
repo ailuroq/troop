@@ -1,22 +1,27 @@
-import { IncomingMessage, ServerResponse } from 'http';
+import { ServerResponse } from 'http';
 import { Basic } from './Basic';
+import { ITake } from './tk/ITake';
+import { OptMethods } from './opt/OptMethods';
+import { OptUrl } from './opt/OptUrl';
+import { Request } from './Request';
 import { TkEndpoint } from './tk/TkEndpoint';
 import { TkFork } from './tk/TkFork';
-import { ITake } from './tk/ITake';
-import { FkRegex } from './fk/FkRegex';
 
 class Main {
     public main(): void {
         new Basic(
             8080,
-            new TkFork('/users',
-                new TkEndpoint(new FkRegex('/list', 'GET, POST, PATCH, DELETE'), new UserList())),
+            new TkFork(
+                new TkEndpoint(new TkUserList(), new OptUrl('/user/list'), new OptMethods('GET, POST')),
+                new TkEndpoint(new TkUserList(), new OptUrl('/user/list'), new OptMethods('GET, POST')),
+            ),
+            new TkEndpoint(new TkUserList(), new OptUrl('/user/list'), new OptMethods('GET, POST')),
         ).start();
     }
 }
 
-class UserList implements ITake {
-    act(_req: IncomingMessage, res: ServerResponse): void {
+class TkUserList implements ITake {
+    act(_req: Request, res: ServerResponse): void {
         res.write(JSON.stringify({hello: 'there'}));
         res.end();
     }

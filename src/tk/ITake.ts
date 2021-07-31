@@ -1,5 +1,6 @@
 import http from 'http';
+import { Request } from '../Request';
 
 export interface ITake {
-    act(req: http.IncomingMessage, res: http.ServerResponse): void;
+    act(req: Request, res: http.ServerResponse): void;
 }

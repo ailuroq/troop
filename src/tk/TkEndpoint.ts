@@ -1,20 +1,21 @@
 import { ITake } from './ITake';
 import http from 'http';
-import { IFork } from '../fk/IFork';
-
+import { Request } from '../Request';
+import { IOpt } from '../opt/IOpt';
+import { TkOptions } from './TkOptions';
 export class TkEndpoint implements ITake {
     private readonly take: ITake; 
-    private readonly options: IFork;
+    private readonly options: IOpt[];
 
-    constructor(options: IFork, take: ITake) {
+    constructor(take: ITake, ...options: IOpt[]) {
         this.take = take;
         this.options = options;
     }
 
-    act(req: http.IncomingMessage, res: http.ServerResponse): void {
-        const map = this.options.route(req, res).band();
-        if (req.method) {
-            if (req.url === this.parseUrl(map) && this.parseMethods(map).includes(req.method)) {
+    act(req: Request, res: http.ServerResponse): void {
+        new TkOptions(this.options).act(req, res);
+        if (req.nodeReq.method) {
+            if (req.nodeReq.url === this.parseUrl(req.options()) && this.parseMethods(req.options()).includes(req.nodeReq.method)) {
                 this.take.act(req, res);
             }
         }
@@ -23,8 +24,8 @@ export class TkEndpoint implements ITake {
     private parseUrl<T>(maps: Map<string, T>[]): string {
         for (const map of maps) {
             const value = map.get('url');
-            if (Array.isArray(value)) {
-                return value[0];
+            if (typeof value === 'string') {
+                return value;
             }
         }
         return '';
