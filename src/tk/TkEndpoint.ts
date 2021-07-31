@@ -1,19 +1,27 @@
 import { ITake } from './ITake';
 import http from 'http';
 import { Request } from '../Request';
-import { IOpt } from '../opt/IOpt';
 import { TkOptions } from './TkOptions';
+import { OptUrl } from '../opt/OptUrl';
+import { OptMethods } from '../opt/OptMethods';
 export class TkEndpoint implements ITake {
-    private readonly take: ITake; 
-    private readonly options: IOpt[];
+    private readonly take: ITake;
+    private readonly url: string;
+    private readonly methods: string;
+    private readonly options: TkOptions;
 
-    constructor(take: ITake, ...options: IOpt[]) {
+    constructor(url: string, methods: string, take: ITake) {
+        this.url = url;
+        this.methods = methods;
         this.take = take;
-        this.options = options;
+        this.options = new TkOptions(
+            new OptUrl(this.url),
+            new OptMethods(this.methods),
+        );
     }
 
     act(req: Request, res: http.ServerResponse): void {
-        new TkOptions(this.options).act(req, res);
+        this.options.act(req, res);
         if (req.nodeReq.method) {
             if (req.nodeReq.url === this.parseUrl(req.options()) && this.parseMethods(req.options()).includes(req.nodeReq.method)) {
                 this.take.act(req, res);

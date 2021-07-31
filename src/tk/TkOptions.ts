@@ -5,8 +5,8 @@ import { Request } from '../Request';
 
 export class TkOptions implements ITake {
     private readonly options: IOpt[];
-    constructor(options: IOpt[]) {
-        this.options = options;        
+    constructor(...options: IOpt[]) {
+        this.options = options;
     }
     act(req: Request, _res: ServerResponse): void {
         for (const option of this.options) {
