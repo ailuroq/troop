@@ -2,6 +2,7 @@ import { IOpt } from './IOpt';
 
 export class OptParams implements IOpt {
     private readonly url: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private readonly map: Map<string, any>;
 
     constructor(url: string) {
