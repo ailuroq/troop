@@ -4,6 +4,7 @@ export class Request {
     private readonly nodeReq: IncomingMessage;
     private readonly params: Map<string, string>;
     private readonly query: Map<string, string>;
+    private readonly subPattern: string[] = [''];
 
     constructor(req: IncomingMessage) {
         this.nodeReq = req;
@@ -33,6 +34,14 @@ export class Request {
         const query = this.query.get(name);
         if (query) return query;
         else throw new Error('There is no query with name: ' + name);
+    }
+
+    addSubPattern(subUrl: string): void {
+        this.subPattern.push(subUrl);
+    }
+
+    getSubPattern(): string {
+        return this.subPattern[0];
     }
 
     nativeReq(): IncomingMessage {

@@ -8,11 +8,11 @@ import { TkGuard } from './TkGuard';
 
 export class TkEndpoint implements ITake {
     private readonly take: ITake;
-    private readonly url: string;
+    private readonly pattern: string;
     private readonly methods: string;
 
-    constructor(url: string, methods: string, take: ITake) {
-        this.url = url;
+    constructor(pattern: string, methods: string, take: ITake) {
+        this.pattern = pattern;
         this.methods = methods;
         this.take = take;
     }
@@ -20,8 +20,8 @@ export class TkEndpoint implements ITake {
     act(req: Request, res: http.ServerResponse): void {
         new TkGuard(
             this.take,
-            new OptParams(this.url),
-            new OptQueries(this.url),
+            new OptParams(this.pattern),
+            new OptQueries(this.pattern),
             new OptMethods(this.methods),
         ).act(req, res);
     }
