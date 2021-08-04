@@ -2,11 +2,18 @@ import { IOpt } from './IOpt';
 import {Request} from '../Request';
 
 export class OptUrl implements IOpt {
-    private readonly url: string;
-    constructor(url: string) {
-        this.url = url;
+    private readonly pattern: string;
+    private readonly params: Map<string, string>
+
+    constructor(pattern: string, params: Map<string, string>) {
+        this.pattern = pattern;
+        this.params = params;
     }
-    parse<T>(_req: Request): Map<string, T> {
-        return new Map().set('name', 'url').set('data', this.url);
+    route(req: Request): boolean {
+        let url = req.nativeReq().url;
+        for (const [key, value] of this.params) {
+            if (url) url = url.replace(String(value), ':' + key);
+        }
+        return this.pattern === url;
     }
 }

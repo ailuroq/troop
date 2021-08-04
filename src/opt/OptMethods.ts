@@ -1,15 +1,23 @@
 import { IOpt } from './IOpt';
 import {Request} from '../Request';
+import { MethodsFromString } from '../helpers/MethodsFromString';
 
 export class OptMethods implements IOpt {
-    private readonly methods: string
-    constructor(methods: string) {
-        this.methods = methods;
-    }
+    private readonly methods: string[] = [];
 
-    parse<T>(_req: Request): Map<string, T> {
-        const splittedMethods = this.methods.replace(/ /g, '').split(',');
-        if (new Set(splittedMethods).size !== splittedMethods.length) throw new Error('Methods have duplicated values');
-        return new Map().set('name', 'methods').set('data', [...new Set(this.methods.replace(/ /g, '').split(','))]);
+    constructor(methods: string)
+    constructor(methods: string[])
+    constructor(methods: string | string[]) {
+        if (typeof methods === 'string') {
+            return new OptMethods(new MethodsFromString(methods).parse());
+        }
+        else if (Array.isArray(methods) && methods.every(item => typeof item === 'string')) {
+            this.methods = methods;
+        } else throw new Error('OptMethods construct error');
+    }
+    route(req: Request): boolean {
+        const method = req.nativeReq().method;
+        if (method) return this.methods.includes(method);
+        return false;
     }
 }

@@ -1,23 +1,29 @@
 import { IOpt } from './IOpt';
 import {Request} from '../Request';
+import { OptUrl } from './OptUrl';
 
 export class OptParams implements IOpt {
     private readonly pattern: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    private readonly map: Map<string, any>;
+    private readonly map: Map<string, string>;
 
     constructor(pattern: string) {
         this.pattern = pattern;
         this.map = new Map();
     }
-    parse<T>(_req: Request): Map<string, T> {
+
+    route(req: Request): boolean {
+        this.parse(req);
+        return new OptUrl(this.pattern, req.getParams()).route(req);
+    }
+
+    private parse(req: Request): void {
         const splittedPattern = this.pattern.split('/');
         for (let i = 0; i < splittedPattern.length; i++) {
             const splittedPeace = splittedPattern[i].split('');
-            if (splittedPeace[0] === ':' && _req.nodeReq.url) {
-                this.map.set(splittedPattern[i].slice(1), _req.nodeReq.url.split('/')[i]);
+            const nodeReq = req.nativeReq().url;
+            if (splittedPeace[0] === ':' && nodeReq) {
+                req.addParam(splittedPattern[i].slice(1), nodeReq.split('/')[i]);
             }
         }
-        return new Map().set('name', 'params').set('data', this.map);
     }
-} 
+}

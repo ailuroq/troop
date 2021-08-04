@@ -9,7 +9,10 @@ export class OptQueries implements IOpt {
         this.url = url;
     }
 
-    parse<T>(_req: Request): Map<string, T> {
-        return new Map().set('name', 'queries').set('data', new Map(Object.entries(qs.parse(this.url.split('?')[1]))));
+    route(req: Request): boolean {
+        for (const [key, value] of new Map(Object.entries(qs.parse(this.url.split('?')[1])))) {
+            req.addQuery(key, String(value));
+        }
+        return true;
     }
 }

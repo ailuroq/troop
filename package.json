@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "build": "tsc"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.171",

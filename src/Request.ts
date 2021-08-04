@@ -1,24 +1,41 @@
 import { IncomingMessage} from 'http';
 
 export class Request {
-    public readonly nodeReq: IncomingMessage;
-    private readonly maps: Map<string, any>;
+    private readonly nodeReq: IncomingMessage;
+    private readonly params: Map<string, string>;
+    private readonly query: Map<string, string>;
 
     constructor(req: IncomingMessage) {
         this.nodeReq = req;
-        this.maps = new Map();
+        this.params = new Map();
+        this.query = new Map();
     }
 
-    addOption<T>(option: Map<string, T>): void {
-        this.maps.set(String(option.get('name')), option.get('data'));
+    addParam(name: string, value: string): void {
+        this.params.set(name, value);
     }
 
-    checkOption(name: string): boolean {
-        if (this.maps.get(name)) return true;
-        return false;
+    getParam(name: string): string {
+        const param = this.params.get(name);
+        if (param) return param;
+        else throw new Error('There is no param with name: ' + name);
+    }
+    
+    getParams(): Map<string, string> {
+        return this.params;
+    }
+    
+    addQuery(name: string, value: string): void {
+        this.query.set(name, value);
     }
 
-    options<T> (): Map<string, T> {
-        return this.maps;
+    getQuery(name: string): string {
+        const query = this.query.get(name);
+        if (query) return query;
+        else throw new Error('There is no query with name: ' + name);
+    }
+
+    nativeReq(): IncomingMessage {
+        return this.nodeReq;
     }
 }
