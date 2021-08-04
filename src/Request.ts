@@ -2,24 +2,23 @@ import { IncomingMessage} from 'http';
 
 export class Request {
     public readonly nodeReq: IncomingMessage;
-    private readonly maps: Map<string, any>[] = [];
+    private readonly maps: Map<string, any>;
 
     constructor(req: IncomingMessage) {
         this.nodeReq = req;
+        this.maps = new Map();
     }
 
     addOption<T>(option: Map<string, T>): void {
-        this.maps.push(option);
+        this.maps.set(String(option.get('name')), option.get('data'));
     }
 
     checkOption(name: string): boolean {
-        for (const map of this.maps) {
-            if (map.get(name)) return true;
-        }
+        if (this.maps.get(name)) return true;
         return false;
     }
 
-    options<T> (): Map<string, T>[] {
+    options<T> (): Map<string, T> {
         return this.maps;
     }
 }

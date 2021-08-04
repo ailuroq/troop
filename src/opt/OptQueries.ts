@@ -1,4 +1,5 @@
 import { IOpt } from './IOpt';
+import {Request} from '../Request';
 import qs from 'qs';
 
 export class OptQueries implements IOpt {
@@ -8,7 +9,7 @@ export class OptQueries implements IOpt {
         this.url = url;
     }
 
-    parse<T>(): Map<string, T> {
-        return new Map().set('queries', new Map(Object.entries(qs.parse(this.url.split('?')[1]))));
+    parse<T>(_req: Request): Map<string, T> {
+        return new Map().set('name', 'queries').set('data', new Map(Object.entries(qs.parse(this.url.split('?')[1]))));
     }
 }

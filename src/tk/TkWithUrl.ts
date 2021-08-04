@@ -15,7 +15,7 @@ export class TkWithUrl implements ITake {
 
 
     act(req: Request, _res: ServerResponse): void {
-        req.addOption(new OptUrl(this.url).parse());
+        req.addOption(new OptUrl(this.url).parse(req));
         throw new Error('Method not implemented.');
     }
 }

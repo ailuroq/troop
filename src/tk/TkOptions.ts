@@ -10,7 +10,7 @@ export class TkOptions implements ITake {
     }
     act(req: Request, _res: ServerResponse): void {
         for (const option of this.options) {
-            req.addOption(option.parse());
+            req.addOption(option.parse(req));
         }
     }
 

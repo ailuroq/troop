@@ -1,3 +1,5 @@
+import {Request} from '../Request';
+
 export interface IOpt {
-    parse<T>(): Map<string, T>;
+    parse<T>(req: Request): Map<string, T>;
 }

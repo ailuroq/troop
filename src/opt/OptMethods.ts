@@ -1,4 +1,5 @@
 import { IOpt } from './IOpt';
+import {Request} from '../Request';
 
 export class OptMethods implements IOpt {
     private readonly methods: string
@@ -6,9 +7,9 @@ export class OptMethods implements IOpt {
         this.methods = methods;
     }
 
-    parse<T>(): Map<string, T> {
+    parse<T>(_req: Request): Map<string, T> {
         const splittedMethods = this.methods.replace(/ /g, '').split(',');
         if (new Set(splittedMethods).size !== splittedMethods.length) throw new Error('Methods have duplicated values');
-        return new Map().set('methods', [...new Set(this.methods.replace(/ /g, '').split(','))]);
+        return new Map().set('name', 'methods').set('data', [...new Set(this.methods.replace(/ /g, '').split(','))]);
     }
 }
