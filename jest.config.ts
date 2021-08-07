@@ -3,7 +3,7 @@ export default {
         '<rootDir>',
     ],
     'testMatch': [
-        '**/tests/**/*.+(ts|tsx|js)',
+        '**/test/**/*.+(ts|tsx|js)',
         '**/?(*.)+(spec|test).+(ts|tsx|js)',
     ],
     'transform': {

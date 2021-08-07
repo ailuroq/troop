@@ -18,5 +18,4 @@
     "transpileOnly": true,
   },
   "include": ["**/*.ts"]
-
 }
