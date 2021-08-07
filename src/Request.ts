@@ -12,8 +12,9 @@ export class Request {
         this.query = new Map();
     }
 
-    addParam(name: string, value: string): void {
+    addParam(name: string, value: string): this {
         this.params.set(name, value);
+        return this;
     }
 
     getParam(name: string): string {
@@ -26,8 +27,9 @@ export class Request {
         return this.params;
     }
     
-    addQuery(name: string, value: string): void {
+    addQuery(name: string, value: string): this {
         this.query.set(name, value);
+        return this;
     }
 
     getQuery(name: string): string {
@@ -36,7 +38,12 @@ export class Request {
         else throw new Error('There is no query with name: ' + name);
     }
 
+    getQueries(): Map<string, string> {
+        return this.query;
+    }
+
     addSubPattern(subUrl: string): void {
+        this.subPattern.length = 0;
         this.subPattern.push(subUrl);
     }
 
