@@ -1,9 +1,11 @@
 import {it, expect, describe} from '@jest/globals';
 import { Request } from '../src/Request';
 import httpMocks from 'node-mocks-http';
+import { IncomingMessage } from 'http';
 
 describe('class Request', () => {
-    const req = httpMocks.createRequest({});
+    const req: IncomingMessage = httpMocks.createRequest({});
+    
     it('add params', () => {
         expect(new Request(req).addParam('name', 'exampleName').addParam('id', '1').getParams()).toEqual(new Map().set('name', 'exampleName').set('id', '1'));
     });
