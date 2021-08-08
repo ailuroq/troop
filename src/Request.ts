@@ -1,11 +1,17 @@
 import { IncomingMessage} from 'http';
 
+/**
+ * Wrapper over the native node.js http request for options implementations
+ */
 export class Request {
     private readonly nodeReq: IncomingMessage;
     private readonly params: Map<string, string>;
     private readonly query: Map<string, string>;
     private readonly subPattern: string[] = [''];
-
+    /**
+     * 
+     * @param req native node.js http request
+     */
     constructor(req: IncomingMessage) {
         this.nodeReq = req;
         this.params = new Map();

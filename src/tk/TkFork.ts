@@ -5,7 +5,12 @@ import { Request } from '../Request';
 export class TkFork implements ITake {
     private readonly subPattern: string = '';
     private readonly takes: ITake[];
-
+    /**
+     * 
+     * @param subPattern optional first part of url
+     * @default subPattern empty string ''
+     * @param tks  array of ITake to execute
+     */
     constructor(subPattern: string, ...tks: ITake[]) {
         this.subPattern = subPattern;
         this.takes = tks;
