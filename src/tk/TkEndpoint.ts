@@ -11,7 +11,7 @@ export class TkEndpoint implements ITake {
     private readonly pattern: string;
     private readonly methods: string;
     /**
-     * 
+     * Constructor
      * @param pattern Url pattern
      * @param methods Methods for endpoint
      * @param take Take to execute

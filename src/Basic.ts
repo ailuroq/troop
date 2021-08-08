@@ -6,7 +6,7 @@ export class Basic {
     private readonly port: number;
     private readonly frks: ITake[];
     /**
-     * 
+     * Constructor
      * @param port port for the application
      * @param takes takes for the loop
      */

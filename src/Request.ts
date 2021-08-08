@@ -9,7 +9,6 @@ export class Request {
     private readonly query: Map<string, string>;
     private readonly subPattern: string[] = [''];
     /**
-     * 
      * @param req native node.js http request
      */
     constructor(req: IncomingMessage) {

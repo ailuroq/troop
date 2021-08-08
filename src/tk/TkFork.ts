@@ -6,7 +6,7 @@ export class TkFork implements ITake {
     private readonly subPattern: string = '';
     private readonly takes: ITake[];
     /**
-     * 
+     * Constructor
      * @param subPattern optional first part of url
      * @default subPattern empty string ''
      * @param tks  array of ITake to execute
