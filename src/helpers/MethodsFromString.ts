@@ -4,8 +4,14 @@ export class MethodsFromString {
         this.methods = methods;
     }
     parse(): string [] {
-        const splittedMethods = this.methods.replace(/ /g, '').split(',');
+        const splittedMethods = this.methods.split(/[\s,]+/);
         if (new Set(splittedMethods).size !== splittedMethods.length) throw new Error('Methods have duplicated values');
-        return [...new Set(this.methods.replace(/ /g, '').split(','))];
+        return [...new Set(splittedMethods)];
     }
 }
+
+// 'GET POST PATCH'
+// 'GET, POST, PATCH'
+// 'GET,POST,PATCH'
+// 'GET, POST,PATCH'
+// result ['GET', 'POST', 'PATCH']
